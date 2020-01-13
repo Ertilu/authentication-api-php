@@ -49,7 +49,9 @@
           "id" => $user->id,
           "firstname" => $user->firstname,
           "lastname" => $user->lastname,
-          "email" => $user->email
+          "email" => $user->email,
+          "exp" => $user->exp,
+          "level" => $user->level
       )
     );
 
@@ -61,11 +63,11 @@
     echo json_encode(
             array(
                 "message" => "Successful login.",
-                "jwt" => $jwt
+                "jwt" => $jwt,
+                "userData" => $token["data"]
             )
         );
-
-  } else{
+  } else {
    
       // set response code
       http_response_code(401);

@@ -24,13 +24,13 @@
   
   // instantiate user object
   $user = new User($db);
-  
+
   // get posted data
   $data = json_decode(file_get_contents("php://input"));
-  
+
   // get jwt
-  $jwt=isset($data->jwt) ? $data->jwt : "";
-  
+  $jwt = isset($data->jwt) ? $data->jwt : "";
+
   // if jwt is not empty
   if($jwt){
   
@@ -41,37 +41,16 @@
       $decoded = JWT::decode($jwt, $key, array('HS256'));
 
       // set user property values
-      $user->firstname = $data->firstname;
-      $user->lastname = $data->lastname;
-      $user->email = $data->email;
-      $user->password = $data->password;
       $user->id = $decoded->data->id;
 
-      // update the user record
-      if($user->update()) {
-        // we need to re-generate jwt because user details might be different
-        $token = array(
-          "iss" => $iss,
-          "aud" => $aud,
-          "iat" => $iat,
-          "nbf" => $nbf,
-          "data" => array(
-              "id" => $user->id,
-              "firstname" => $user->firstname,
-              "lastname" => $user->lastname,
-              "email" => $user->email
-          )
-        );
-        $jwt = JWT::encode($token, $key);
-
+      if($user->gainExp()) {
         // set response code
         http_response_code(200);
 
         // response in json format
         echo json_encode(
             array(
-                "message" => "User was updated.",
-                "jwt" => $jwt
+                "message" => "Congratulation $user->firstname $user->lastname your experience has increased by $user->exp. You are now level $user->level"
             )
         );
       } else {
@@ -94,11 +73,9 @@
           "error" => $e->getMessage()
       ));
     }
+    
   } else {
-  
-    // set response code
-    http_response_code(401);
-
-    // tell the user access denied
-    echo json_encode(array("message" => "Access denied."));
+      echo json_encode(array(
+        "message" => "Access denied."
+      ));
   }

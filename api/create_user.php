@@ -29,6 +29,8 @@
     $user->lastname = $data->lastname;
     $user->email = $data->email;
     $user->password = $data->password;
+    $user->exp = 0;
+    $user->level = 1;
   }
   
   // create the user
