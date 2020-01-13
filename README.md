@@ -1,12 +1,12 @@
 # Authentication API PHP
 
 ![](https://img.shields.io/badge/Code%20Style-Standard-yellow.svg)
-![](https://img.shields.io/badge/Dependencies-Express-green.svg)
+![](https://img.shields.io/badge/Dependencies-JWT-green.svg)
 ![](https://img.shields.io/badge/License-ISC-yellowgreen.svg)
 
 <p align="center">
-  <a href="https://nodejs.org/">
-    <img alt="restfulapi" title="Restful API" src="https://cdn-images-1.medium.com/max/871/1*d2zLEjERsrs1Rzk_95QU9A.png">
+  <a href="https://www.php.net/">
+    <img alt="restfulapi" title="PHP" src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg">
   </a>
 </p>
 <p align="center">
@@ -30,8 +30,8 @@
 ## Installation
 ### Clone
 ```
-$ git clone https://github.com/Ertilu/simple-rest-api.git to xampp/htdocs/
-$ cd xampp/htdocs/simple-rest-api
+$ git clone https://github.com/Ertilu/authentication-api-php.git to xampp/htdocs/
+$ cd xampp/htdocs/authentication-api-php
 $ import the database using phpmyadmin
 
 ```
@@ -48,33 +48,35 @@ $ import the database using phpmyadmin
 
 #### POST Request
 ```
- 1. "/user/register" => Create user and return token. 
+ 1. "/api/create_user.php" => Create user and return token. 
     a. Required Body: 
-       1) name: string
-       2) username: string
+       1) firstname: string
+       2) lastname: string
        3) email: string
        4) password: string
        5) * date_created and date_updated: (auto created)
 
- 2. "/user/login" => Log In user and return token. 
+ 2. "/api/login.php" => Log In user and return token. 
     a. Required Body:
-       1) username: string
+       1) email: string
        2) password: string
+       
+ 3. "/api/update_user.php" => Create user and return token. 
+    a. Required Body: 
+       1) firstname: string
+       2) lastname: string
+       3) email: string
+       4) password: string
+       6) jwt: string (jwt token generated after you login to the system)
 ```
 
 ### LEVELLING SYSTEM Routes
 
 #### POST Request
 ```
- 1. "/product" => Create product and return inserted data.
-    a. Required Header: { auth: token }
+ 1. "/api/add_xp" => Add xp to to user to level up user when you call this API.
     b. Required Body: 
-       1) pName: string
-       2) pDesc: string
-       3) pImage: string //image url
-       4) idCategory: number
-       5) pQty: number
-       *) date created and updated: (auto created)
+       1) jwt: string (jwt token generated after you login to the system)
 ```
 
 ### License
